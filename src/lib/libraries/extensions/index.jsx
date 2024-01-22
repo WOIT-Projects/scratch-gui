@@ -6,7 +6,7 @@ import MCUrl from './mc/mc.png';
 export default [
     {
         name: 'Craftabor',
-        extensionId: 'MC',
+        extensionId: 'craftabor',
         collaborator: 'Craftabor',
         iconURL: MCIconURL,
         insetIconURL: MCUrl,
