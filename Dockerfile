@@ -7,12 +7,13 @@ FROM node:16-alpine as scratch-vm
 WORKDIR /app
 COPY --from=git scratch-vm ./
 RUN npm install
+ARG API_URL
+ENV API_URL=$API_URL
 ENV BUILD_MODE=dist
 RUN npm run build
 
 FROM node:16-alpine as scratch-gui
 WORKDIR /app
-
 COPY . .
 RUN npm install
 
