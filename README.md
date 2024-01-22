@@ -1,14 +1,68 @@
 # scratch-gui
+
 #### Scratch GUI is a set of React components that comprise the interface for creating and running Scratch 3.0 projects
 
+## Craftabor
+
+The required assets are stored in `src/lib/libraries/extensions/mc`. The extension description is in `src/lib/libraries/extensions/index.js`.
+
+### Installation:
+
+Run:
+
+```bash
+npm install
+```
+
+Clone, build and link the modified scratch-vm repository:
+
+```bash
+git clone https://github.com/WOIT-Projects/scratch-vm.git --depth=1
+cd scratch-vm
+npm install
+export BUILD_MODE=dist npm run build
+npm run build
+npm link
+```
+
+Link scratch-vm to the current scratch-gui
+ ```bash
+npm link scratch-vm
+```
+
+**Both scratch repositories have to be on the same level in the local file tree in order for the link to work.** For example `../../scratch-gui` and `../../scratch-vm`.
+
+Build and deploy the application
+ ```bash
+npm run build
+```
+
+### Docker:
+
+To run the application with docker, just run the build command with the API URL build argument set:
+ ```bash
+docker build . -t craftabor-scratch --build-arg API_URL=API_URL
+```
+
+Then run the container with port 80 exposed:
+ ```bash
+docker run -p 8080:80 craftabor-scratch
+```
+
+
+
 ## Installation
+
 This requires you to have Git and Node.js installed.
 
 In your own node environment/application:
+
 ```bash
 npm install https://github.com/LLK/scratch-gui.git
 ```
+
 If you want to edit/play yourself:
+
 ```bash
 git clone https://github.com/LLK/scratch-gui.git
 cd scratch-gui
@@ -18,19 +72,22 @@ npm install
 **You may want to add `--depth=1` to the `git clone` command because there are some [large files in the git repository history](https://github.com/LLK/scratch-gui/issues/5140).**
 
 ## Getting started
+
 Running the project requires Node.js to be installed.
 
 ## Running
+
 Open a Command Prompt or Terminal in the repository and run:
+
 ```bash
 npm start
 ```
+
 Then go to [http://localhost:8601/](http://localhost:8601/) - the playground outputs the default GUI component
 
 ## Developing alongside other Scratch repositories
 
 ### Getting another repo to point to this code
-
 
 If you wish to develop `scratch-gui` alongside other scratch repositories that depend on it, you may wish
 to have the other repositories use your local `scratch-gui` build instead of fetching the current production
@@ -41,6 +98,7 @@ Here's how to link your local `scratch-gui` code to another project's `node_modu
 #### Configuration
 
 1. In your local `scratch-gui` repository's top level:
+
     1. Make sure you have run `npm install`
     2. Build the `dist` directory by running `BUILD_MODE=dist npm run build`
     3. Establish a link to this repository by running `npm link`
@@ -57,12 +115,14 @@ Instead of `BUILD_MODE=dist npm run build`, you can use `BUILD_MODE=dist npm run
 #### Oh no! It didn't work!
 
 If you can't get linking to work right, try:
-* Follow the recipe above step by step and don't change the order. It is especially important to run `npm install` _before_ `npm link` as installing after the linking will reset the linking.
-* Make sure the repositories are siblings on your machine's file tree, like `.../.../MY_SCRATCH_DEV_DIRECTORY/scratch-gui/` and `.../.../MY_SCRATCH_DEV_DIRECTORY/scratch-www/`.
-* Consistent node.js version: If you have multiple Terminal tabs or windows open for the different Scratch repositories, make sure to use the same node version in all of them.
-* If nothing else works, unlink the repositories by running `npm unlink` in both, and start over.
+
+-   Follow the recipe above step by step and don't change the order. It is especially important to run `npm install` _before_ `npm link` as installing after the linking will reset the linking.
+-   Make sure the repositories are siblings on your machine's file tree, like `.../.../MY_SCRATCH_DEV_DIRECTORY/scratch-gui/` and `.../.../MY_SCRATCH_DEV_DIRECTORY/scratch-www/`.
+-   Consistent node.js version: If you have multiple Terminal tabs or windows open for the different Scratch repositories, make sure to use the same node version in all of them.
+-   If nothing else works, unlink the repositories by running `npm unlink` in both, and start over.
 
 ## Testing
+
 ### Documentation
 
 You may want to review the documentation for [Jest](https://facebook.github.io/jest/docs/en/api.html) and [Enzyme](http://airbnb.io/enzyme/docs/api/) as you write your tests.
@@ -71,13 +131,14 @@ See [jest cli docs](https://facebook.github.io/jest/docs/en/cli.html#content) fo
 
 ### Running tests
 
-*NOTE: If you're a Windows user, please run these scripts in Windows `cmd.exe`  instead of Git Bash/MINGW64.*
+_NOTE: If you're a Windows user, please run these scripts in Windows `cmd.exe` instead of Git Bash/MINGW64._
 
 Before running any tests, make sure you have run `npm install` from this (scratch-gui) repository's top level.
 
 #### Main testing command
 
 To run linter, unit tests, build, and integration tests, all at once:
+
 ```bash
 npm test
 ```
@@ -85,11 +146,13 @@ npm test
 #### Running unit tests
 
 To run unit tests in isolation:
+
 ```bash
 npm run test:unit
 ```
 
 To run unit tests in watch mode (watches for code changes and continuously runs tests):
+
 ```bash
 npm run test:unit -- --watch
 ```
@@ -197,12 +260,14 @@ Further reading: [Stack Overflow](https://stackoverflow.com/questions/46602286/n
 ## Troubleshooting
 
 If you run into npm install errors, try these steps:
+
 1. run `npm cache clean --force`
 2. Delete the node_modules directory
 3. Delete package-lock.json
 4. run `npm install` again
 
 ## Publishing to GitHub Pages
+
 You can publish the GUI to github.io so that others on the Internet can view it.
 [Read the wiki for a step-by-step guide.](https://github.com/LLK/scratch-gui/wiki/Publishing-to-GitHub-Pages)
 
@@ -216,24 +281,24 @@ It can be hard to understand the code in src/reducers/project-state.js . There a
 
 These include state constant strings like:
 
-* `NOT_LOADED` (the default state),
-* `ERROR`,
-* `FETCHING_WITH_ID`,
-* `LOADING_VM_WITH_ID`,
-* `REMIXING`,
-* `SHOWING_WITH_ID`,
-* `SHOWING_WITHOUT_ID`,
-* etc.
+-   `NOT_LOADED` (the default state),
+-   `ERROR`,
+-   `FETCHING_WITH_ID`,
+-   `LOADING_VM_WITH_ID`,
+-   `REMIXING`,
+-   `SHOWING_WITH_ID`,
+-   `SHOWING_WITHOUT_ID`,
+-   etc.
 
 ### Transitions
 
 These are names for the action which causes a state change. Some examples are:
 
-* `START_FETCHING_NEW`,
-* `DONE_FETCHING_WITH_ID`,
-* `DONE_LOADING_VM_WITH_ID`,
-* `SET_PROJECT_ID`,
-* `START_AUTO_UPDATING`,
+-   `START_FETCHING_NEW`,
+-   `DONE_FETCHING_WITH_ID`,
+-   `DONE_LOADING_VM_WITH_ID`,
+-   `SET_PROJECT_ID`,
+-   `START_AUTO_UPDATING`,
 
 ### How transitions relate to loading states
 
@@ -262,4 +327,5 @@ Here's what will happen in the project state machine:
 7. The `SHOWING_WITH_ID` state. Now the project appears normally and is playable and editable.
 
 ## Donate
+
 We provide [Scratch](https://scratch.mit.edu) free of charge, and want to keep it that way! Please consider making a [donation](https://www.scratchfoundation.org/donate) to support our continued engineering, design, community, and resource development efforts. Donations of any size are appreciated. Thank you!
